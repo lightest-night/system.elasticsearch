@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>LightestNight.System.ElasticSearch</AssemblyName>
+        <RootNamespace>LightestNight.System.ElasticSearch</RootNamespace>
+        <LangVersion>latest</LangVersion>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>LightestNight.System.ElasticSearch</PackageId>
+        <Authors>James Woodley</Authors>
+        <Company>Lightest Night Ltd</Company>
+        <Title>Lightest Night :: System :: ElasticSearch</Title>
+        <Description>Helper functions and utilities to access an instance of ElasticSearch</Description>
+        <PackageTags>lightestnight;system;elastic;search;elasticsearch</PackageTags>
+        <PackageVersion>1.0.0</PackageVersion>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <InformationalVersion>1.0.0</InformationalVersion>
+        <PackageIconUrl>https://www.gravatar.com/avatar/01d9ae6081c5243ef46b38dc4056f9d8</PackageIconUrl>
+        <RepositoryUrl>https://github.com/lightest-night/system.elasticsearch</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LightestNight.System.Configuration" Version="1.3.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
+      <PackageReference Include="NEST" Version="7.3.0" />
+    </ItemGroup>
+
+</Project>
