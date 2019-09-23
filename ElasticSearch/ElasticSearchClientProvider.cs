@@ -1,10 +1,12 @@
 using System;
-using System.Diagnostics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Elasticsearch.Net;
 using Microsoft.Extensions.Options;
 using Nest;
+using Nest.JsonNetSerializer;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace LightestNight.System.ElasticSearch
 {
@@ -19,29 +21,20 @@ namespace LightestNight.System.ElasticSearch
         public ElasticSearchClientProvider(IOptions<ElasticSearchConfig> options)
         {
             var config = options.Value;
-            var settings = new ConnectionSettings(new Uri(config.Uri))
+            var pool = new SingleNodeConnectionPool(new Uri(config.Uri));
+            var settings = new ConnectionSettings(pool, sourceSerializer: (builtIn, s) => new JsonNetSerializer(
+                    builtIn, s,
+                    () => new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                        PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }, resolver => resolver.NamingStrategy = new CamelCaseNamingStrategy()))
                 .DefaultIndex(config.DefaultIndex);
 
             if (!string.IsNullOrEmpty(config.Username) && !string.IsNullOrEmpty(config.Password))
                 settings.BasicAuthentication(config.Username, config.Password);
 
-            settings.DisableDirectStreaming()
-                .PrettyJson()
-                .OnRequestCompleted(response =>
-                {
-                    // Log out the request
-                    Debug.WriteLine(response.RequestBodyInBytes != null
-                        ? $"{response.HttpMethod} {response.Uri}{Environment.NewLine}{Encoding.UTF8.GetString(response.RequestBodyInBytes)}"
-                        : $"{response.HttpMethod} {response.Uri}");
-
-                    Debug.WriteLine(null);
-
-                    // Log out the response
-                    Debug.WriteLine(response.ResponseBodyInBytes != null
-                        ? $"Status: {response.HttpStatusCode}{Environment.NewLine}{Encoding.UTF8.GetString(response.ResponseBodyInBytes)}{Environment.NewLine}{new string('-', 30)}{Environment.NewLine}"
-                        : $"Status: {response.HttpStatusCode}{Environment.NewLine}{new string('-', 30)}");
-                });
-            
             Client = new ElasticClient(settings);
             DefaultIndex = config.DefaultIndex;
         }

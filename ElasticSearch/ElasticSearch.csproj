@@ -25,9 +25,10 @@
 
     <ItemGroup>
       <PackageReference Include="LightestNight.System.Configuration" Version="1.3.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.0.0" />
       <PackageReference Include="NEST" Version="7.3.0" />
+      <PackageReference Include="NEST.JsonNetSerializer" Version="7.3.0" />
     </ItemGroup>
 
 </Project>
