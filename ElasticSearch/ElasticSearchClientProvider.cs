@@ -27,7 +27,6 @@ namespace LightestNight.System.ElasticSearch
                     () => new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                        PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                         NullValueHandling = NullValueHandling.Ignore
                     }, resolver => resolver.NamingStrategy = new CamelCaseNamingStrategy()))
                 .DefaultIndex(config.DefaultIndex);
